@@ -5,12 +5,20 @@ const app = express();
 
 port = 8000;
 console.log(path.join(__dirname));
-const staticPath = path.join(__dirname,"../public")
-app.use(express.static(staticPath));
-app.get("/" , (req,res) => {
-    res.send("hello")
-})
+const staticPath = path.join(__dirname, "../public");
+const templatePath = path.join(__dirname, "../templates");
+app.set("view engine", "hbs");
+app.set("views", templatePath);
 
-app.listen(port , () => {
-    console.log("listening port 8000")
-})
+app.get("/", (req, res) => {
+  res.render("index");
+});
+app.use(express.static(staticPath));
+// app.use(express.static(viewPath));
+app.get("/", (req, res) => {
+  res.send("hello");
+});
+
+app.listen(port, () => {
+  console.log("listening port 8000");
+});
